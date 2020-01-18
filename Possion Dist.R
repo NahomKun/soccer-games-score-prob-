@@ -1,4 +1,4 @@
-data <- read.csv("/Users/olio/Downloads/Soccer Simulation/Soccer Teams Rating - Data.csv", header = TRUE)
+data <- read.csv("/Soccer Simulation/Soccer Teams Rating - Data.csv", header = TRUE)
 head(data)
 
 n <- 0:6
