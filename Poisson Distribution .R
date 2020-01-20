@@ -9,7 +9,9 @@ Arsenal <-dpois(n, lambda = 1.355700)*100
 #Sheffield_Utd Lambda = 1.013155
 Sheffield_Utd <-dpois(n, lambda = 1.013155)*100
 Game_1 <- data.frame(Arsenal,Sheffield_Utd)
+#To add Goals Column
 Game_1$Goals <- c(0:6)
+#Arranges the Colums in Goals, Home Team, Away Team
 Game_1[, c("Goals", "Arsenal" , "Sheffield_Utd")]
 
 #Teams Odds of winning
@@ -27,7 +29,9 @@ Southampton <-dpois(n, lambda = 0.9762576)*100
 #Wolves Lambda = 1.2247378
 Wolves <-dpois(n, lambda = 1.2247378)*100
 Game_2 <- data.frame(Southampton,Wolves)
+#To add Goals Column
 Game_2$Goals <- c(0:6)
+#Arranges the Colums in Goals, Home Team, Away Team
 Game_2[, c("Goals", "Southampton" , "Wolves")]
 
 #Teams Odds of winning
@@ -45,7 +49,9 @@ Burnley <-dpois(n, lambda = 1.2490505)*100
 #Leicester Lambda = 1.9454542
 Leicester <-dpois(n, lambda = 1.9454542)*100
 Game_3 <- data.frame(Burnley,Leicester)
+#To add Goals Column
 Game_3$Goals <- c(0:6)
+#Arranges the Colums in Goals, Home Team, Away Team
 Game_3[, c("Goals", "Burnley" , "Leicester")]
 
 #Teams Odds of winning
@@ -64,7 +70,9 @@ Liverpool <-dpois(n, lambda = 1.7041080)*100
 #Man_Utd Lambda = 1.64842493574
 Man_Utd <-dpois(n, lambda = 1.64842493574)*100
 Game_4 <- data.frame(Liverpool,Man_Utd)
+#To add Goals Column
 Game_4$Goals <- c(0:6)
+#Arranges the Colums in Goals, Home Team, Away Team
 Game_4[, c("Goals", "Liverpool" , "Man_Utd")]
 
 #Teams Odds of winning
