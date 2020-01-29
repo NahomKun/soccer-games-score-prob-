@@ -17,6 +17,7 @@ Game_1[, c("Goals", "Arsenal" , "Sheffield_Utd")]
 #Teams Odds of winning
 Arsenal <- rpois(10000,1.355700)
 Sheffield_Utd <- rpois(10000,1.013155)
+Count_1 <-data.frame(Arsenal,Sheffield_Utd)
 probs_1 <- data.frame(Arsenal= length(which(Arsenal - Sheffield_Utd>0)), Draw= length(which(Arsenal - Sheffield_Utd==0)),
                       Sheffield_Utd= length(which(Arsenal - Sheffield_Utd<0)))
 (probs_1/10000)*100
@@ -37,6 +38,7 @@ Game_2[, c("Goals", "Southampton" , "Wolves")]
 #Teams Odds of winning
 Southampton <- rpois(10000,0.9762576)
 Wolves <- rpois(10000,1.2247378)
+Count_2 <-data.frame(Southampton,Wolves)
 probs_2 <- data.frame(Southampton= length(which(Southampton - Wolves>0)), Draw= length(which(Southampton - Wolves==0)),
                       Wolves= length(which(Southampton - Wolves<0)))
 (probs_2/10000)*100
@@ -57,6 +59,7 @@ Game_3[, c("Goals", "Burnley" , "Leicester")]
 #Teams Odds of winning
 Burnley <- rpois(10000,1.2490505)
 Leicester <- rpois(10000,1.9454542)
+Count_3 <-data.frame(Burnley,Leicester)
 probs_3 <- data.frame(Burnley= length(which(Burnley - Leicester>0)), Draw= length(which(Burnley - Leicester==0)),
                       Leicester= length(which(Burnley - Leicester<0)))
 (probs_3/10000)*100
@@ -78,6 +81,7 @@ Game_4[, c("Goals", "Liverpool" , "Man_Utd")]
 #Teams Odds of winning
 Liverpool_Prob <- rpois(10000,1.7041080)
 Man_Utd_Prob <- rpois(10000,1.64842493574)
+Count_4 <-data.frame(Liverpool,Man_Utd)
 probs_4 <- data.frame(Liverpool= length(which(Liverpool_Prob - Man_Utd_Prob>0)), Draw= length(which(Liverpool_Prob - Man_Utd_Prob==0)),
                     Man_Utd= length(which(Liverpool_Prob - Man_Utd_Prob<0)))
 (probs_4/10000)*100
