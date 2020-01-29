@@ -1,4 +1,4 @@
-data <- read.csv(file="/Users/olio/Downloads/Soccer Simulation/Soccer Teams Rating - Data.csv", header = TRUE)
+data <- read.csv(file="/Soccer Simulation/Soccer Teams Rating - Data.csv", header = TRUE)
 head(data)
 
 #Game 1
