@@ -1,92 +1,85 @@
-data <- read.csv(file="/Soccer Simulation/Soccer Teams Rating - Data.csv", header = TRUE)
-head(data)
+library(rvest)
+library(dplyr)
+library(janitor)
 
-#Game 1
-#Probability of scoring n amount of goals
-n <- 0:6
-#Arsenal Lambda = 1.355611
-Arsenal <-dpois(n, lambda = 1.355700)*100
-#Sheffield_Utd Lambda = 1.013155
-Sheffield_Utd <-dpois(n, lambda = 1.013155)*100
-Game_1 <- data.frame(Arsenal,Sheffield_Utd)
-#To add Goals Column
-Game_1$Goals <- c(0:6)
-#Arranges the Colums in Goals, Home Team, Away Team
-Game_1[, c("Goals", "Arsenal" , "Sheffield_Utd")]
+eplhome <-read_html("https://www.soccerstats.com/formtable.asp?league=england") %>% html_nodes("table") %>%
+  .[[17]] %>%
+  html_table()
+eplhome$X1 <- as.character(eplhome$X1)
+eplhome[1,1] <- "Position"
+eplhome[1,2] <- "Team"
+eplhome<- row_to_names(eplhome,1)
+eplhome<-eplhome[,-c(11,12)]
+eplhome[,c(3:10)] <- lapply(eplhome[,c(3:10)], as.numeric)
+eplhome<- eplhome%>%mutate(GFper=GF/GP, GAper= GA/GP, AttStr=GFper/(mean(GFper)), DefStr=GAper/(mean(GAper)))
 
-#Teams Odds of winning
-Arsenal <- rpois(10000,1.355700)
-Sheffield_Utd <- rpois(10000,1.013155)
-Count_1 <-data.frame(Arsenal,Sheffield_Utd)
-probs_1 <- data.frame(Arsenal= length(which(Arsenal - Sheffield_Utd>0)), Draw= length(which(Arsenal - Sheffield_Utd==0)),
-                      Sheffield_Utd= length(which(Arsenal - Sheffield_Utd<0)))
-(probs_1/10000)*100
-
-#Game 2
-#Probability of scoring n amount of goals
-n <- 0:6
-#Southampton Lambda = 0.9762576	
-Southampton <-dpois(n, lambda = 0.9762576)*100
-#Wolves Lambda = 1.2247378
-Wolves <-dpois(n, lambda = 1.2247378)*100
-Game_2 <- data.frame(Southampton,Wolves)
-#To add Goals Column
-Game_2$Goals <- c(0:6)
-#Arranges the Colums in Goals, Home Team, Away Team
-Game_2[, c("Goals", "Southampton" , "Wolves")]
-
-#Teams Odds of winning
-Southampton <- rpois(10000,0.9762576)
-Wolves <- rpois(10000,1.2247378)
-Count_2 <-data.frame(Southampton,Wolves)
-probs_2 <- data.frame(Southampton= length(which(Southampton - Wolves>0)), Draw= length(which(Southampton - Wolves==0)),
-                      Wolves= length(which(Southampton - Wolves<0)))
-(probs_2/10000)*100
-
-#Game 3
-#Probability of scoring n amount of goals
-n <- 0:6
-#Burnley Lambda = 1.2490505
-Burnley <-dpois(n, lambda = 1.2490505)*100
-#Leicester Lambda = 1.9454542
-Leicester <-dpois(n, lambda = 1.9454542)*100
-Game_3 <- data.frame(Burnley,Leicester)
-#To add Goals Column
-Game_3$Goals <- c(0:6)
-#Arranges the Colums in Goals, Home Team, Away Team
-Game_3[, c("Goals", "Burnley" , "Leicester")]
-
-#Teams Odds of winning
-Burnley <- rpois(10000,1.2490505)
-Leicester <- rpois(10000,1.9454542)
-Count_3 <-data.frame(Burnley,Leicester)
-probs_3 <- data.frame(Burnley= length(which(Burnley - Leicester>0)), Draw= length(which(Burnley - Leicester==0)),
-                      Leicester= length(which(Burnley - Leicester<0)))
-(probs_3/10000)*100
+eplaway <-read_html("https://www.soccerstats.com/formtable.asp?league=england") %>% html_nodes("table") %>%
+  .[[19]] %>%
+  html_table()
+eplaway$X1 <- as.character(eplaway$X1)
+eplaway[1,1] <- "Position"
+eplaway[1,2] <- "Team"
+eplaway<- row_to_names(eplaway,1)
+eplaway<-eplaway[,-c(11,12)]
+eplaway[,c(3:10)] <- lapply(eplaway[,c(3:10)], as.numeric)
+eplaway<- eplaway%>%mutate(GFper=GF/GP, GAper= GA/GP, AttStr=GFper/(mean(GFper)), DefStr=GAper/(mean(GAper)))
 
 
-#Game 4
-#Probability of scoring n amount of goals
-n <- 0:6
-#Liverpool Lambda = 1.7041080
-Liverpool <-dpois(n, lambda = 1.7041080)*100
-#Man_Utd Lambda = 1.64842493574
-Man_Utd <-dpois(n, lambda = 1.64842493574)*100
-Game_4 <- data.frame(Liverpool,Man_Utd)
-#To add Goals Column
-Game_4$Goals <- c(0:6)
-#Arranges the Colums in Goals, Home Team, Away Team
-Game_4[, c("Goals", "Liverpool" , "Man_Utd")]
+itlhome <-read_html("https://www.soccerstats.com/formtable.asp?league=italy") %>% html_nodes("table") %>%
+  .[[17]] %>%
+  html_table()
+itlhome$X1 <- as.character(itlhome$X1)
+itlhome[1,1] <- "Position"
+itlhome[1,2] <- "Team"
+itlhome<- row_to_names(itlhome,1)
+itlhome<-itlhome[,-c(11,12)]
+itlhome[,c(3:10)] <- lapply(itlhome[,c(3:10)], as.numeric)
+itlhome<- itlhome%>%mutate(GFper=GF/GP, GAper= GA/GP, AttStr=GFper/(mean(GFper)), DefStr=GAper/(mean(GAper)))
 
-#Teams Odds of winning
-Liverpool_Prob <- rpois(10000,1.7041080)
-Man_Utd_Prob <- rpois(10000,1.64842493574)
-Count_4 <-data.frame(Liverpool,Man_Utd)
-probs_4 <- data.frame(Liverpool= length(which(Liverpool_Prob - Man_Utd_Prob>0)), Draw= length(which(Liverpool_Prob - Man_Utd_Prob==0)),
-                    Man_Utd= length(which(Liverpool_Prob - Man_Utd_Prob<0)))
-(probs_4/10000)*100
+itlaway <-read_html("https://www.soccerstats.com/formtable.asp?league=italy") %>% html_nodes("table") %>%
+  .[[19]] %>%
+  html_table()
+itlaway$X1 <- as.character(itlaway$X1)
+itlaway[1,1] <- "Position"
+itlaway[1,2] <- "Team"
+itlaway<- row_to_names(itlaway,1)
+itlaway<-itlaway[,-c(11,12)]
+itlaway[,c(3:10)] <- lapply(itlaway[,c(3:10)], as.numeric)
+itlaway<- itlaway%>%mutate(GFper=GF/GP, GAper= GA/GP, AttStr=GFper/(mean(GFper)), DefStr=GAper/(mean(GAper)))
 
-#probability of Arsenal and Sheffield_Utd scoring 4 or less goals  
-#Arsenal_4<- ppois(4, lambda = 1.355611, lower = FALSE)*100
-#Sheffield_Utd_4 <- ppois(4, lambda = 1.013155, lower = FALSE)*100
-#data.frame(Arsenal_4,Sheffield_Utd_4)
+# Function to calculate lambdas
+calculate_lambdas <- function(home_team, away_team, home_table, away_table) {
+  
+  # Extract relevant information for the home team
+  home_info <- home_table %>% filter(Team == home_team) 
+  home_AttStr <- home_info$AttStr
+  home_DefStr <- home_info$DefStr
+  home_league_avg <- mean(home_table$GFper)
+  
+  # Extract relevant information for the away team
+  away_info <- away_table %>% filter(Team == away_team)
+  away_AttStr <- away_info$AttStr
+  away_DefStr <- away_info$DefStr
+  away_league_avg <- mean(away_table$GFper)
+  
+  # Example: Replace this with your desired calculation
+  lambda_home <- home_AttStr * away_DefStr * home_league_avg
+  lambda_away <- away_AttStr * home_DefStr * away_league_avg
+  
+  return(list(lambda_home = lambda_home, lambda_away = lambda_away))
+}
+
+# Example: Calculate lambdas for given home and away teams
+home_team <- "Liverpool"
+away_team <- "Luton Town"
+lambdas <- calculate_lambdas(home_team, away_team, eplhome, eplaway)
+print(lambdas$lambda_home)
+print(lambdas$lambda_away)
+
+
+# Example: Calculate lambdas for given home and away teams
+home_team <- "Torino"
+away_team <- "Lazio"
+lambdas <- calculate_lambdas(home_team, away_team, itlhome, itlaway)
+print(lambdas$lambda_home)
+print(lambdas$lambda_away)
